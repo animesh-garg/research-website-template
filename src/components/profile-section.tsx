@@ -6,6 +6,8 @@ import {
   Twitter,
   ArrowUpRight,
   GraduationCap,
+  Globe,
+  MapPin
 } from "lucide-react";
 import { AboutMe } from "@/data/aboutme";
 
@@ -112,6 +114,21 @@ export function ProfileSection({ aboutMe }: ProfileSectionProps) {
               </a>
             </>
           )}
+                    {aboutMe.labPage && (
+            <>
+              <br />
+              <a
+                href={`https://${aboutMe.labPage}`}
+                className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Globe size={14} />
+                PAIR Lab
+              </a>
+            </>
+          )}
+          <br />
           {aboutMe.twitterUsername && (
             <>
               <br />
@@ -122,6 +139,20 @@ export function ProfileSection({ aboutMe }: ProfileSectionProps) {
                 rel="noopener noreferrer"
               >
                 <Twitter size={14} />@{aboutMe.twitterUsername}
+              </a>
+            </>
+          )}
+          {aboutMe.linkedinUsername && (
+            <>
+              <br />
+              <a
+                href={`https://www.linkedin.com/in/${aboutMe.linkedinUsername}`}
+                className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Linkedin size={14} />
+                linkedin.com/in/{aboutMe.linkedinUsername}
               </a>
             </>
           )}
@@ -139,19 +170,20 @@ export function ProfileSection({ aboutMe }: ProfileSectionProps) {
               </a>
             </>
           )}
-          {aboutMe.linkedinUsername && (
+          <br/>
+          {aboutMe.addressOffice && (
             <>
               <br />
               <a
-                href={`https://www.linkedin.com/in/${aboutMe.linkedinUsername}`}
+                href={`${aboutMe.addressURL}`}
                 className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin size={14} />
-                linkedin.com/in/{aboutMe.linkedinUsername}
+                <MapPin size={14} />
+                {aboutMe.addressOffice}
               </a>
-            </>
+            </>            
           )}
         </div>
       </div>

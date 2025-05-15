@@ -1,3 +1,5 @@
+"use client"
+import React, { useState } from "react";
 import { EducationEntry } from "@/components/education-entry";
 import { educationData } from "@/data/education";
 import { PublicationEntry } from "@/components/publication-entry";
@@ -10,6 +12,10 @@ import { ExperienceEntry } from "@/components/experience-entry";
 import { experienceData } from "@/data/experience";
 import { PortfolioEntry } from "@/components/portfolio-entry";
 import { portfolioData } from "@/data/portfolio";
+import { TeachingEntry } from "@/components/teaching-entry";
+import { teachingData } from "@/data/teaching";
+import { TalksEntry } from "@/components/talks-entry";
+import { talksData } from "@/data/talks";
 import { sectionOrder, Section } from "@/data/section-order";
 
 export default function Home() {
@@ -28,7 +34,7 @@ export default function Home() {
           </div>
 
           {/* Right Column - Scrolling Content */}
-          <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-24">
+          <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-12">
             {/* About section is typically first */}
             {aboutMe.description && (
               <section>
@@ -44,19 +50,32 @@ export default function Home() {
               // Most of this is redundant... but in case it needs to be unique.
               switch (sectionName) {
                 case Section.News:
-                  return (
+                  const newsListToShow = 5;
+                  const [showMore, setShowMore] = useState(false);
+                  return (                    
                     newsData.length > 0 && (
                       <section key={sectionName}>
-                        <h2 className="font-serif text-l mb-12 tracking-wide uppercase">
+                        <h2 className="font-serif text-l mb-8 tracking-wide uppercase">
                           News
                         </h2>
-                        <div className="space-y-12">
-                          {newsData.map((news, index) => (
+                        <div className="space-y-4">
+                          {(showMore
+                            ? newsData
+                            : newsData.slice(0, newsListToShow)
+                          ).map((news, index) => (
                             <div key={index}>
                               <NewsEntry news={news} />
                             </div>
                           ))}
-                        </div>
+                          {newsData.length > newsListToShow && (
+                            <button
+                              className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-300"
+                              onClick={() => setShowMore(!showMore)}
+                            >
+                              {showMore ? "Show Less" : "Show More"}
+                            </button>
+                          )}
+                        </div>                        
                       </section>
                     )
                   );
@@ -64,10 +83,10 @@ export default function Home() {
                   return (
                     educationData.length > 0 && (
                       <section key={sectionName}>
-                        <h2 className="font-serif text-zinc-700 mb-12 tracking-wide uppercase">
+                        <h2 className="font-serif text-md mb-8 tracking-wide uppercase">
                           Education
                         </h2>
-                        <div className="space-y-12">
+                        <div className="space-y-4">
                           {educationData.map((education, index) => (
                             <EducationEntry key={index} education={education} />
                           ))}
@@ -79,10 +98,10 @@ export default function Home() {
                   return (
                     publicationData.length > 0 && (
                       <section key={sectionName}>
-                        <h2 className="font-serif text-l mb-12 tracking-wide uppercase">
+                        <h2 className="font-serif text-l mb-8 tracking-wide uppercase">
                           Publications
                         </h2>
-                        <div className="space-y-12">
+                        <div className="space-y-4">
                           {publicationData.map((publication, index) => (
                             <div key={index}>
                               <PublicationEntry publication={publication} />
@@ -99,10 +118,10 @@ export default function Home() {
                   return (
                     experienceData.length > 0 && (
                       <section key={sectionName}>
-                        <h2 className="font-serif text-md mb-12 tracking-wide uppercase">
+                        <h2 className="font-serif text-md mb-8 tracking-wide uppercase">
                           Experience
                         </h2>
-                        <div className="space-y-12">
+                        <div className="space-y-4">
                           {experienceData.map((experience, index) => (
                             <ExperienceEntry
                               key={index}
@@ -117,10 +136,10 @@ export default function Home() {
                   return (
                     portfolioData.length > 0 && (
                       <section key={sectionName}>
-                        <h2 className="font-serif text-md mb-12 tracking-wide uppercase">
+                        <h2 className="font-serif text-md mb-8 tracking-wide uppercase">
                           Portfolio
                         </h2>
-                        <div className="space-y-12">
+                        <div className="space-y-4">
                           {portfolioData.map((portfolio, index) => (
                             <PortfolioEntry key={index} portfolio={portfolio} />
                           ))}
@@ -128,6 +147,37 @@ export default function Home() {
                       </section>
                     )
                   );
+                  case Section.Teaching:
+                    return (
+                      teachingData.length > 0 && (
+                        <section key={sectionName}>
+                          <h2 className="font-serif text-md mb-8 tracking-wide uppercase">
+                            Teaching
+                          </h2>
+                          <div className="space-y-4">
+                            {teachingData.map((teaching, index) => (
+                              <TeachingEntry key={index} teaching={teaching} />
+                            ))}
+                          </div>
+                        </section>
+                      )
+                    );
+                    case Section.Talks:
+                      return (
+                        talksData.length > 0 && (
+                          <section key={sectionName}>
+                            <h2 className="font-serif text-md mb-8 tracking-wide uppercase">
+                              Recent Talks
+                            </h2>
+                            <div className="space-y-4">
+                              {talksData.map((talks, index) => (
+                                <TalksEntry key={index} talks={talks} />
+                              ))}
+                            </div>
+                          </section>
+                        )
+                      );
+  
                 default:
                   return null;
               }

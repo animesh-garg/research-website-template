@@ -6,7 +6,6 @@ export function ExperienceEntry({ experience }: { experience: Experience }) {
       <span className="text-xs text-zinc-500 mt-1">{experience.date}</span>
       <div className="col-span-3 flex flex-col">
         <h3 className="text-base font-serif">
-          {experience.title} —{" "}
           {experience.companyUrl ? (
             <a
               href={experience.companyUrl}
@@ -20,6 +19,10 @@ export function ExperienceEntry({ experience }: { experience: Experience }) {
             experience.company
           )}
         </h3>
+        {experience.title && (
+          <h3 className="text-base font-serif">{experience.title}</h3>
+        )
+        }
         {experience.advisor && (
           <p className="text-sm text-zinc-600 leading-relaxed italic mt-2">
             Advisor: {experience.advisor}
